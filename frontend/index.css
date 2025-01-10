@@ -1,0 +1,795 @@
+/**
+    THIS TUTORIAL IS ABOUT RESPONSIVE DESIGN, FLEXBOX AND GRID
+
+    ==== FLEXBOX
+    flex is a shorthand for flex-grow, flex-shrink and flex-basis
+    flex-flow is a shorthand for flex-direction and flex-wrap
+
+    flex items can be individually aligned within the flex container using the align-self property
+
+    ==== GRID
+    grid-template-row and grid-template-column are used to define the number of rows and columns in the grid
+    grid can be used as a shorthand for grid-template-rows, grid-template-columns, grid-template-areas, grid-auto-rows, grid-auto-columns, grid-auto-flow, grid and grid-gap
+
+    grid-template-row and grid-template-column values are space-separated lists of values that define the size of the rows and columns in the grid (length of list defines the number of rows or columns)
+    
+    use auto for each value to create a grid with equal-sized rows or columns
+    
+    expample: grid-template-rows: 100px auto 100px; this creates a grid with 3 rows, the first and last row are 100px tall and the middle row takes up the remaining space
+    
+    a row will automatically be added if grid items are more than the number of rows defined in grid-template-rows
+    for grid-template-columns, the same applies
+    in a container with defined height, if you have two rows, one with defined height and the other with auto, the row with defined height will take up the defined height and the other row will take up the remaining space
+
+    justify-content and align-content can be used to align grid items within the grid container, it works the same way as flexbox
+
+    place-content is a shorthand for justify-content and align-content
+
+    example: place-content: center center; this centers the grid items both horizontally and vertically
+ 
+    NOTE: Also note that rows are defined with height and columns are defined with width
+    you can define column gaps and row gaps using column-gap and row-gap respectively
+    
+    you use grid-template-areas to define the layout of the grid, you can use the names of the grid items to define the layout of the grid
+    grid-template-areas is used in conjunction with grid-area to define the layout of the grid
+    example: .grid-container{
+        display: grid;
+        grid-template-areas: "header header header"
+                             "advert content content"
+                             "footer footer footer";
+    }
+    .header{
+        grid-area: header;
+    }
+
+    by default a grid column contains only one grid item, if you want a grid item to span multiple columns, you can use grid-column-start and grid-column-end
+    grid-column on the grid item is a shorthand for grid-column-start and grid-column-end
+    example: .content{
+        grid-column: 2 / 4;
+    } this makes content start at the second column and end before the fourth column
+
+    you can also use span to define the number of columns a grid item should span 
+    example: .content{
+        grid-column: 2 / span 2;
+    } this makes content start at the second column and span two columns
+
+    grid-row works the same way as grid-column
+    grid-row is a shorthand for grid-row-start and grid-row-end
+
+    grid-area is a shorthand for grid-row-start, grid-column-start, grid-row-end and grid-column-end
+    example: .content{
+        grid-area: 2 / 2 / 4 / 4;
+    } this makes content start at the second row and second column and end at the fourth row and fourth column
+    you can also use the span keyword with grid-area
+
+    grid-area can also be used to name grid items as shown in the grid-template-areas example above
+    in grid-template-areas, each row is defined as a string and each grid item is defined as a string within the row string
+    example: grid-template-areas: "header header header"
+                                 "advert content content"
+                                 "footer footer footer"; 
+    in the above example, the header grid item spans three columns and the content grid item spans two columns
+    the container has three rows and three columns
+
+    use period (.) to define an empty cell in grid-template-areas for grid items that do not have assign names
+    example: grid-template-areas: "header header header"
+                                 "advert . content"
+                                 "footer footer footer";
+    the above example has an empty cell between the advert and content grid items
+    grid-template-areas: 'myArea myArea . . .' 'myArea myArea . . .';
+    in the above myArea will span two columns and two rows, while other items will span one column and one row
+
+    grid-area, grid-column and grid-row can be used to order grid items, since they define the start and end positions of grid items
+    this can be useful in responsive design
+
+    justify-self can be used to align grid items within the grid container along the row axis
+    align-self can be used to align grid items within the grid container along the column axis
+
+    NOTE: alignment is applied within the grid item's grid area, therefore align-self:end will align the grid item to the end of its assigned grid area
+
+    justify-self has values left, center, right
+    place-self is a shorthand for justify-self and align-self
+
+    @media only screen and (orientation: landscape) styles will only be applied when the screen is in landscape mode
+    (min-device-width) sets a min device width for the media query rather than min-width which sets a min width for the browser window
+
+    it is beneficial for loading time to have multiple images of different sizes for different screen sizes
+    <picture> element can be used to define multiple sources for an image, thus helping to load the right image for the right screen size
+    example: <picture>
+                <source media="(min-width: 650px)" srcset="large.jpg">
+                <source media="(min-width: 465px)" srcset="medium.jpg">
+                <img src="small.jpg" alt="A rad wolf"> this is defined for browsers that do not support the <picture> element
+            </picture>
+**/
+
+/**========== Project CSS ===============**/
+@import url('./font.css');
+
+*,::after,::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --text-h : rgba(255,255,255,1);
+    --text-m : rgba(255,255,255,0.6);
+    --text-l : rgba(255,255,255,0.5);
+    --primary: #04011C;
+    --secondary : #0D0D2D;
+    --card: rgba(255, 255, 255, 0.03);
+    --gradient : linear-gradient(103.84deg, #DF1CFF -25.59%, #EA0070 138%);
+    --btn-shadow: 0px 9px 100px rgba(208, 17, 204, 0.35);
+
+    --flex-margin: 10vw;
+    --fix-margin: calc((100vw - 1200px) / 2);
+    --margin: var(--flex-margin);
+
+    --border-gradient : linear-gradient(130deg, #EA0070 -25.59%, #ff17bd00 100%);
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+html{
+    font-family: 'Arial', sans-serif;
+}
+
+body{
+    background-color: var(--primary);
+    overflow-x: hidden;
+}
+
+h1, h2,h3,h4,h5,h6{
+    color: var(--text-h);
+    text-transform: capitalize;
+    text-shadow: 1px 1px 2px #000;
+}
+
+a{
+    text-decoration: none;
+    color: var(--text-m);
+    text-transform: capitalize;
+    display: block;
+}
+
+button{
+    cursor: pointer;
+}
+
+.full-btn{
+    line-height: 1;
+    padding: 12px 40px;
+    background: var(--gradient);
+    box-shadow: var(--btn-shadow);
+    border-radius: 8px;
+    color: var(--text-h);
+    border: none;
+    font-weight: 600;
+}
+
+.outline-btn{
+    line-height: 1;
+    padding: 8px 16px;
+    background-color: var(--primary);
+    border:unset;
+    color: var(--text-h);
+    border-radius: 8px;
+    box-shadow: var(--btn-shadow);
+    position: relative;
+}
+
+
+.outline-btn::before{
+    content: '';
+    position: absolute;
+    height: calc(100% + 4px);
+    width: calc(100% + 4px);
+    top:-2px;
+    left:-2px;
+    border-radius: 8px;
+    background: var(--border-gradient);
+    z-index: -1;
+}
+
+#menu-btn{
+    background-color: transparent;
+    border: none;
+    color: var(--text-h);
+    display: block;
+    padding: 8px;
+}
+#menu-btn > i{
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.clicked{
+    color: var(--text-m);
+}
+
+.invisible{
+    visibility: hidden;
+}
+.visible{
+    visibility: visible;
+}
+
+#inputErr{
+    color: var(--text-h);
+    display: none;
+    text-transform: capitalize;
+    margin-inline:auto;
+    margin-block:1rem;
+    width: fit-content;
+}
+
+.isErrored{
+    display: block !important;
+}
+
+.blue-pill{
+    padding: 8px 16px;
+    width: fit-content;
+
+    /* Unnamed Color */
+    background: linear-gradient(90deg, #FFFFFF -106.63%, #1EE0E1 -106.6%, rgba(24, 254, 255, 0) 84.92%);
+    border-radius: 36px;
+
+    line-height: 1;
+}
+
+.divider{
+    border-top: var(--text-l) solid 1px;
+    margin-block:2rem;
+}
+
+input{
+    background-color: var(--card);
+    color: var(--text-h);
+    padding: 16px;
+    border-radius: 8px;
+    border: unset;
+}
+
+input::placeholder{
+    color: var(--text-m);
+}
+
+#nav-backdrop{
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    filter: blur(250px);
+    -webkit-filter: blur(250px);
+    border-radius: 100%;
+    opacity: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem var(--margin);
+    position: fixed;
+    width: 100%;
+    top:0;
+    left:0;
+    background-color: var(--primary);
+    z-index: 99;
+}
+nav > ul{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    align-items: center;
+    gap: 16px;
+    list-style-type: none;
+    background-color: var(--card);
+    border-radius: 8px;
+    position: absolute;
+    top: 110%;
+    right: var(--margin);
+    z-index: 100;
+    visibility: hidden;
+}
+
+.logo{
+    height: 1rem;
+    width: auto;
+}
+
+#hero{
+    position: relative;
+    overflow-x: hidden;
+    padding-block: 3rem;
+}
+
+/*hero section*/
+#hero-main{
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+    padding: 2rem var(--margin);
+    padding-top: 40%;
+    text-align: center;
+    min-height: fit-content;
+    background-image: url('./assets//hero-img.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+
+.hero-content > h1{
+    color: var(--text-h);
+    font-weight: 800;
+}
+
+.blue-header{
+    color: #1EE0E1;
+    font-weight: 300;
+}
+
+.hero-content > p{
+    color: var(--text-m);
+    margin-block: 1rem;
+}
+
+
+#hero-backdrop{
+    min-width: 100vw;
+    min-height: 100vh;
+    background: conic-gradient(from 180deg at 50% 50%, #D9D9D9 0deg, #297FFF 0.04deg, #BF38FF 78.75deg, #CF68FF 187.5deg, #28CBFF 268.13deg, #E1A2FF 360deg);
+    filter: blur(250px);
+    border-radius: 100%;
+    opacity: 10%;
+    position: absolute;
+    z-index: -1;
+}
+
+
+/*hero secondary content*/
+
+#hero .hero-sec-content{
+    margin-top: 2rem;
+}
+
+#hero .hero-sec-content > h5 {
+    display: flex;
+    align-items: center;
+    gap:0.5rem;
+    text-align: left;
+    width: fit-content;
+    color: var(--text-h);
+}
+#hero .hero-sec-content > h5 > img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+/*project stats*/
+#hero .hero-sec-content .stat{
+    display: flex;
+    flex-flow: row wrap;
+    gap:1rem;
+    justify-content: center;
+    margin: 1rem;
+}
+
+#hero .hero-sec-content .stat > .hero-stat {
+    text-align: center;
+}
+
+#hero .hero-sec-content .stat > .hero-stat > p{
+    text-transform: capitalize;
+    color:var(--text-m);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+#hero .hero-sec-content .stat > .hero-stat > h5{
+    text-transform: capitalize;
+    color:var(--text-h);
+    font-weight: 600;
+}
+
+
+section, footer{
+    padding: 2rem var(--margin);
+}
+
+#popular-nfts > h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#nft-cards-wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/*nft card styling*/
+#nft-cards-wrapper .nft-card{
+    background-color: var(--card);
+    padding: 1rem;
+    border-radius: 16px;
+    display: flex;
+    flex-flow: column;
+    width: fit-content;
+}
+
+
+#nft-cards-wrapper .nft-card .card-img{
+    flex: 1;
+}
+
+
+#nft-cards-wrapper .nft-card .card-img > img{
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+#nft-cards-wrapper .nft-card .card-info{
+    display: flex;
+    flex-flow: row-reverse wrap-reverse;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1rem;
+    color: var(--text-h);
+    white-space: nowrap;
+}
+#nft-cards-wrapper .nft-card .card-info p:nth-child(1){
+    margin-right: auto;
+}
+
+#nft-cards-wrapper .nft-card .card-info .nft-price{
+    display: flex;
+    align-items: center;
+    flex-flow: row-reverse;
+}
+
+#nft-cards-wrapper .nft-card .card-info .nft-price img{
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: cover;
+}
+
+
+#nft-cards-wrapper .nft-card > button{
+    display: block;
+    font-size: 0.5em;
+    text-transform : capitalize;
+}
+
+#popular-nfts > a {
+    width: fit-content;
+    margin-inline: auto;
+    margin-block: 2rem;
+}
+
+#nft-filies > .blue-pill{
+    margin-inline: auto;
+    margin-block: 2rem;
+}
+
+#nft-filies > h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#instruction-cards{
+    display: flex;
+    flex-flow: column;
+    gap:0.5rem;
+}
+
+#instruction-cards > .instruction-card{
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background-color: var(--card);
+    position: relative;
+    border-radius: 8px;
+}
+
+#instruction-cards > .instruction-card > h6{
+    margin-top: 1rem;
+}
+
+#instruction-cards > .instruction-card > p {
+    color: var(--text-m);
+    margin-block: 0.5rem;
+}
+
+#instruction-cards > .instruction-card  .icon{
+    width: 3.5rem;
+    height: 3.5rem;
+    position: absolute;
+    right: 0;
+    top:-1.5rem;
+    background-color: var(--primary);
+    border-radius: 8px;
+    padding: 0.8rem;
+}
+
+#instruction-cards > .instruction-card  .icon img{
+    width: 100%;
+    height: 100%;
+}
+
+#nft-category > h3{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#nft-category > p{
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-m);
+}
+
+#cat-wrap{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto;
+    gap: 1rem
+}
+
+#cat-wrap > img{
+    width: 100%;
+}
+
+#nft-category > a{
+    width: fit-content;
+    margin-inline: auto;
+    margin-block: 2rem;
+}
+
+#partner-wrap{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem
+}
+
+#partner-wrap img{
+    max-height: 2.5rem;
+}
+
+#article-section .content{
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 2rem;
+    overflow-x: auto;
+}
+
+#article-section .content .header-content{
+    min-width: 60vw;
+}
+
+#article-section .content .header-content img{
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+#article-section .content .header-content p{
+    margin-block: 2rem;
+    color: var(--text-m);
+}
+
+#article-wrapper{
+    display: flex;
+    gap: 2rem;
+}
+
+#article-wrapper .news-card p{
+    color: var(--text-m);
+    margin-block: 1rem;
+}
+
+#contact-form > h1{
+    text-align: center;
+    color: var(--text-h);
+    text-shadow: 
+    0px 4px 10px rgba(0, 0, 0, 0.5), /* Inner shadow */
+    0px 0px 5px rgba(0, 255, 255, 0.7), /* Outer glow */
+    3px 3px 0px rgba(0, 255, 255, 1); /* More pronounced glow */
+    background: linear-gradient(to bottom, #00d8ff, #0ff); /* Blue gradient glow */
+    -webkit-background-clip: text;
+}
+
+#contact-form > p {
+    color: var(--text-m);
+    margin-top: 2rem;
+    text-align: center;
+}
+
+#contact-form > button, #contact-form > input{
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+footer > div:first-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 2rem;
+}
+
+footer > div:first-child a {
+    box-sizing: content-box;
+    padding: 16px;
+    border-radius: 100%;
+    background-color: var(--card);
+    line-height: 1;
+    color: var(--text-h);
+}
+
+footer > div:nth-child(3){
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    gap: 1rem;
+}
+
+footer > div:nth-child(3) > small{
+    display: block;
+    text-align: center;
+    color: var(--text-h);
+}
+
+footer > div:nth-child(3) ul {
+    display: contents;
+    list-style: none;
+}
+
+/*TABLET SCREENS*/
+@media screen and (min-width: 560px) {
+    #hero-main{
+        text-align: left;
+        background-size: 40%;
+        background-position: top right;
+        padding-top:2rem;
+    }
+
+    #hero-main > div:nth-child(1){
+        width: 65%;
+    }
+
+    #hero .hero-sec-content .stat > .hero-stat{
+        text-align: left;
+    }
+
+    #hero-main a{
+        width: fit-content;
+    }
+
+    #nft-cards-wrapper .nft-card{
+        flex: 0 1 calc(30% - (2rem /3));
+    }
+    #nft-cards-wrapper .nft-card .card-img > img{
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    #article-section  a {
+        width: fit-content;
+    }
+
+    #contact-form button{
+        width: fit-content;
+        display: block;
+        margin-inline: auto;
+    }
+
+    footer > div:nth-child(3){
+        flex-flow: row wrap;
+    }
+
+    #contact-form > p, #contact-form > input{
+        display: block;
+        max-width: 70%;
+        margin-inline: auto;
+    }
+
+    footer > div:nth-child(3) > small{
+        margin-right:  auto;
+    }
+}
+
+@media screen and (min-width: 820px) {
+
+    #hero-main{
+        background-size: 40%;
+    }
+
+    #hero-main > div:nth-child(1){
+        width: 50%;
+    }
+
+
+    /* #nft-cards-wrapper .nft-card{
+        flex:30%;
+        flex-shrink: 1;
+        flex-grow: 0;
+    } */
+
+    #instruction-cards{
+        flex-flow: row wrap;
+    }
+
+    #instruction-cards > div{
+        flex: 0 1 calc(50% - (0.5rem / 2));
+    }
+    
+    .cat-1 {
+        grid-area: cat-1;
+    }
+    .cat-2 {
+        grid-area: cat-2;
+    }
+    .cat-3 {
+        grid-area: cat-3;
+    }
+    .cat-4 {
+        grid-area: cat-4;
+    }
+
+    #cat-wrap{
+        max-width: 100%;
+        grid-template-columns: unset;
+        grid-template-rows: unset;
+        grid-template-areas: 'cat-1 cat-2 cat-2'
+                            'cat-3 cat-3 cat-4';
+        align-items: stretch;
+    }
+   
+}
+
+@media screen and (min-width: 1120px) {
+    nav > ul{
+        flex-direction: row;
+        background-color: transparent;
+        position: relative;
+        right: unset;
+        top: unset;
+        z-index: unset;
+        visibility: visible;
+        flex:1;
+        justify-content: flex-end;
+    }
+    nav>ul>li:last-child{
+        display: block;
+       justify-self: flex-end;
+    }
+    #menu-btn{
+        display: none;
+    }
+}
+
+/* LARGE SCREENS */
+@media only screen and (min-width: 1400px){
+    :root{
+        --margin: var(--fix-margin);
+    }
+}
+
+

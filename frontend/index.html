@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="hero-backdrop"></div>
+    <nav>
+        <div id="nav-backdrop"></div>
+        <a href="#">
+            <img src="./assets/logo.png" 
+                class="logo" 
+                alt="our logo" 
+            />
+        </a>
+        <ul id="menu-tray">
+            <li>
+                <a href="#hero-main">home</a>
+            </li>
+            <li>
+                <a href="#popular-nfts">all NFTs</a>
+            </li>
+            <li>
+                <a href="#nft-category">team</a>
+            </li>
+            <li>
+                <a href="#nft-category">terms & co.</a>
+            </li>
+            <li>
+                <a href="#contact-form">contact</a>
+            </li>
+            <li>
+                <a href="#contact-form" class="outline-btn">get in touch</a>
+            </li>
+        </ul>
+        <button type="button" id="menu-btn">
+            <i class='bx bx-menu'></i>
+        </button>
+        
+    </nav>
+
+    <header id="hero">
+        <div id="hero-main">
+            <div class="hero-content">
+                <h1>Buy, Create &
+                    Sell <span class="blue-header">Unique NFTs</span> File.
+                </h1>
+                <p>NFTs are used for digital art and collectibles, GameFi projects, metaverses, and more.</p>
+                <a href="#nfts" class="full-btn">explore NFTs</a>
+            </div>
+    
+            <div class="hero-sec-content">
+                <h5 class='header'>
+                    <img src="./assets//eye.png" alt="eye on you" />
+                    <span>
+                        Nico NFT Marketplace Overview
+                    </span>
+                </h5>
+                <div class="stat"></div>
+            </div>
+        </div>
+    </header>
+    <section id="popular-nfts">
+        <h3>
+            <span class="blue-header">
+                most popular
+            </span>
+            NFTs
+        </h3>
+        <div id="nft-cards-wrapper"></div>
+        <a href="#"
+            class="outline-btn"
+        >explore all NFTs</a>
+    </section>
+    <section id="nft-filies">
+        <h6 class="blue-pill">
+            unique files
+        </h6>
+        <h3>
+            How to <span class="blue-header">Create & Sell</span> Your NFT Files.
+        </h3>
+        <div id="instruction-cards"></div>
+    </section>
+    <section id="nft-category">
+        <h3>
+            <span class="blue-header">
+                browse by
+            </span>
+            category
+        </h3>
+        <p>Set a secondary sales fee and add social links, a description, profile and banner images, and a description.</p>
+        <div id="cat-wrap">
+            <img src="./assets/cat-1.png" alt="cat" class="cat-1" />
+            <img src="./assets/cat-2.png" alt="cat" class="cat-2" />
+            <img src="./assets/cat-3.png" alt="cat" class="cat-3" />
+            <img src="./assets/cat-4.png" alt="cat" class="cat-4" />
+        </div>
+        <a href="#" class="outline-btn">
+            explore NFTs category
+        </a>
+        <div id="partner-wrap"></div>
+    </section>
+    <section id="article-section">
+        <div class="content">
+            <div class="header-content">
+                <img src="./assets/newspaper.png" alt="NFT news" />
+                <h3>
+                    <span class="blue-header">trending</span> crypto market news
+                </h3>
+                <p>Set a secondary sales fee and add social links, a description, profile and banner images, and a description.</p>
+                <a href="#" class="full-btn">
+                    explore NFTs
+                </a>
+            </div>
+            <div id="article-wrapper"></div>
+        </div>
+    </section>
+    <section id="contact-form">
+        <h1>get in touch</h1>
+        <p>Set a secondary sales fee and add social links, a description, profile and banner images, and a description.</p>
+        <input 
+            type="text" 
+            name="user-email" 
+            id="user-email"
+            placeholder="Enter your email address" 
+        />
+        <small id="inputErr"></small>
+        <button type="button" id="contact-submit-btn" class="full-btn">contact us</button>
+    </section>
+
+    <footer>
+        <div>
+            <a href="https://facebook.com/" class="">
+                <i class='bx bxl-facebook'></i>
+            </a>
+            <a href="https://facebook.com/" class="">
+                <i class='bx bxl-twitter'></i>
+            </a>
+            <a href="https://facebook.com/" class="">
+                <i class='bx bxl-linkedin-square' ></i>
+            </a>
+            <a href="https://facebook.com/" class="">
+                <i class='bx bxl-youtube' ></i>
+            </a>
+        </div>
+        <div class="divider"></div>
+        <div>
+            <small class="copy-right">
+                Copyright © 2022 Nazmul Shanto. All Rights Reserved
+            </small>
+            <ul>
+                <li>
+                    <a href="#hero-main">
+                        <small>
+                            home
+                        </small>
+                    </a>
+                </li>
+                <li>
+                    <a href="#popular-nfts">
+                        <small>
+                            all NFTs
+                        </small>
+                    </a>
+                </li>
+                <li>
+                    <a href="#nft-category">
+                        <small>
+                            team
+                        </small>
+                    </a>
+                </li>
+                <li>
+                    <a href="#nft-category">
+                        <small>
+                            terms & co.
+                        </small>
+                    </a>
+                </li>
+                <li>
+
+                    <a href="#contact-form">
+                        <small>
+                            contact
+                        </small>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+
+    <!--===== script =====-->
+    <script src="index.js"></script>
+    <script src='./html.js'></script>
+</body>
+</html>
