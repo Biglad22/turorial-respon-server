@@ -103,6 +103,7 @@
 
 /**========== Project CSS ===============**/
 @import url('./font.css');
+@import url('./animations.css');
 
 *,::after,::before{
     margin: 0;
@@ -117,14 +118,16 @@
     --primary: #04011C;
     --secondary : #0D0D2D;
     --card: rgba(255, 255, 255, 0.03);
-    --gradient : linear-gradient(103.84deg, #DF1CFF -25.59%, #EA0070 138%);
+    --card-hover: rgba(255, 255, 255, 0.08);
+    --gradient : linear-gradient(135deg,#DF1CFF 0%, #EA0070 50%, #DF1CFF 100%);
+    --gradient-hover : linear-gradient(90deg,#991cff 0%, #ea00ea 50%, #991cff 100%);
     --btn-shadow: 0px 9px 100px rgba(208, 17, 204, 0.35);
 
     --flex-margin: 10vw;
     --fix-margin: calc((100vw - 1200px) / 2);
     --margin: var(--flex-margin);
 
-    --border-gradient : linear-gradient(130deg, #EA0070 -25.59%, #ff17bd00 100%);
+    --border-gradient : linear-gradient(130deg, #EA0070 0%, #ff17bd00 50%, #EA0070 100%);
 }
 
 ::-webkit-scrollbar{
@@ -165,8 +168,11 @@ button{
     border-radius: 8px;
     color: var(--text-h);
     border: none;
-    font-weight: 600;
+    font-weight: 600;  
+    background-size: 200% 100%;
+    animation: fill-button 1.5s alternate infinite linear;
 }
+
 
 .outline-btn{
     line-height: 1;
@@ -189,6 +195,8 @@ button{
     left:-2px;
     border-radius: 8px;
     background: var(--border-gradient);
+    background-size: 200% 100%;
+    animation: fill-button 1.5s alternate infinite linear;
     z-index: -1;
 }
 
@@ -268,6 +276,8 @@ input::placeholder{
     left: 0;
     top: 0;
     z-index: -1;
+    transform-origin: center;
+    animation: rotate-back-drop 10s alternate-reverse infinite linear;
 }
 
 nav{
@@ -298,6 +308,10 @@ nav > ul{
     visibility: hidden;
 }
 
+nav > ul a:focus{
+    color: var(--text-h);
+}
+
 .logo{
     height: 1rem;
     width: auto;
@@ -321,10 +335,11 @@ nav > ul{
     padding-top: 40%;
     text-align: center;
     min-height: fit-content;
-    background-image: url('./assets//hero-img.png');
+    background-image: url('../assets//hero-img.png');
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: top center;
+    animation: hero-anime 2.5s alternate infinite linear;
 }
 
 
@@ -348,11 +363,13 @@ nav > ul{
     min-width: 100vw;
     min-height: 100vh;
     background: conic-gradient(from 180deg at 50% 50%, #D9D9D9 0deg, #297FFF 0.04deg, #BF38FF 78.75deg, #CF68FF 187.5deg, #28CBFF 268.13deg, #E1A2FF 360deg);
-    filter: blur(250px);
+    filter: blur(150px);
     border-radius: 100%;
     opacity: 10%;
     position: absolute;
     z-index: -1;
+    transform-origin: center;
+    animation: rotate-back-drop 15s alternate infinite linear;
 }
 
 
@@ -505,6 +522,12 @@ section, footer{
     background-color: var(--card);
     position: relative;
     border-radius: 8px;
+    transition: all 1s;
+}
+
+#instruction-cards > .instruction-card:hover{
+    background-color: var(--card-hover);
+    transition: all 1s;
 }
 
 #instruction-cards > .instruction-card > h6{
@@ -624,6 +647,12 @@ section, footer{
 #contact-form > button, #contact-form > input{
     width: 100%;
     margin-top: 1.5rem;
+    transition: all 1s;
+}
+
+#contact-form > input:hover, #contact-form > input:focus{
+    background-color: var(--card-hover);
+    transition: all 1s;
 }
 
 footer > div:first-child{
@@ -641,6 +670,12 @@ footer > div:first-child a {
     background-color: var(--card);
     line-height: 1;
     color: var(--text-h);
+    transition: all 1s;
+}
+
+footer > div:first-child a:hover{
+    background-color: var(--card-hover);
+    transition: all 1s;
 }
 
 footer > div:nth-child(3){

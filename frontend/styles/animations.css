@@ -1,0 +1,185 @@
+/*
+    ADVANTAGES OF CSS ANIMATION
+    = CSS DRIVEN ANIMATIONS ARE PERFORM BETTER THAN JAVASCRIPT DRIVEN ANIMATIONS, EVEN UNDER MODERATE SYSTEM LOAD
+    = GIVES BROWSER CONTROL OF ANIMATION, THIS HELPS FOR OPTIMIZATION
+
+    STEP 
+    TO CREATE A CSS ANIMATION SEQUENCE YOU STYLE ELEMENT ( ELEMENT TO BE ANIMATED ) WITH THE 'ANIMATION' PROPERTY OR IT'S SUB-PROPERTIES
+
+    TO CONFIGURE THE ACTUAL ANIMATION APPEARANCE AND ANIMATION SEQUENCE USE @KEYFRAME
+
+    SINCE ANIMATION IS DEFINED IN THE ELEMENT STYLE, @KEYFRAME USES 0%/FROM 100%/TO TO DEFINE START AND END STATE OF ANIMATION 
+
+    NOTE: ANIMATION IS A SHORTHAND USED TO DEFINE animation-duration; animation-name; animation-iteration-counT; animation-direction;
+
+    EACH PROPERTY CAN TAKE MULTIPLE VALUES SEPARATED BY ','. THIS IS DONE WHEN YOU WANT TO APPLY MULTIPLE ANIMATION TO AN ELEMENT
+
+    EXAMPLE: 
+    animation-name: fadeInOut, moveLeft300px, bounce;
+    animation-duration: 2.5s, 5s, 1s;
+    animation-iteration-count: 2, 1, 5;
+
+    BUT THE ABOVE CAN ACCEPT MULTIPLE ANIMATIONS WITH SINGLE PARAMETERS VALUE
+
+    animation-name: fadeInOut, moveLeft300px, bounce;
+    animation-duration: 2.5s;
+    animation-iteration-count: 2;
+
+    IN THE ABOVE ALL ANIMATION WILL USE THE SAME PARAMETERS
+    THEREFORE IF NUMBER OF PARAMETERS VALUES IS LESS THAN THE NUMBER OF ANIMATION PASSED, he value assignment cycles from the first to the last item in the available list and then cycles back to the first item.
+    IF VALUES EXCEED NUMBER OF ANIMATION, THEN THE EXTRA VALUES WILL GO UNUSED
+
+    Note: Some older browsers (pre-2017) may need prefixes; the live examples you can click to see in your browser include the -webkit prefixed syntax
+
+    EXAMPLE: 
+    P{
+        animation-duration: 3s; //specifies that animation should take 3 seconds total
+        animation-name: slide-in
+    }
+
+    @keyframes slide-in{ // defines keyframes
+
+        // From and To objects are the keyframes
+
+        from { // this can be interchanged for 0%
+          translate: 150vw 0;
+          scale: 200% 1;
+        }
+
+        to { // 100%
+          translate: 0 0;
+          scale: 100% 1;
+        }
+    }
+
+    NOTE: changing any properties that impact the box model negatively impacts performance
+
+
+    EXAMPLE: 
+    @keyframes grow-shrink {
+      25%,
+      75% {  // THIS TELLS THE COMPUTER TO KEEP SCALE AT 100% FOR THE FIRST AND LAST 25%
+        scale: 100%;
+      }
+
+      50% { // THIS SCALES ELEMENT TO 200% AND CHANGES ITS COLOR IN THE MIDDLE OF ANIMATION
+        scale: 200%;
+        color: magenta;
+      }
+    }
+
+    USE ANIMATION-ITERATION-COUNT TO SET NUMBER OF TIMES ANIMATION TO REPEAT ITSELF, VALUE CAN BE A NUMBER OR INFINITE
+    USE ANIMATION-DIRECTION TO SET DIRECTIONAL LOW OF ANIMATION FOR A REPEAT ANIMATION ( ALTERNATE MAKES IT GO BACK AND FORTH)
+
+    YOU CAN USE ANIMATION EVENTS IN JAVASCRIPT TO TRACK WHEN ANIMATION STARTS, ENDS, STARTS A NEW ITERATION
+
+    EXAMPLE: 
+    const element = document.getElementById("watch-me");
+    element.addEventListener("animationstart", listener, false); //FIRES AS SOON AS ANIMATION STARTS
+    element.addEventListener("animationend", listener, false); //
+    element.addEventListener("animationiteration", listener, false);
+    
+    element.className = "slide-in"; // TO PERFECTLY TRACK ANIMATION SET ANIMATION CLASS ON THE JAVASCRIPT TO ENSURE, EVENTS FIRE
+
+
+    NOTE: Supporting browsers animate display and content-visibility with a variation on the discrete animation type. This generally means that properties will flip between two values 50% of the way through animating between the two.
+    There is an exception, however, which is when animating to/from display: none or content-visibility: hidden to a visible value. In this case, the browser will flip between the two values so that the animated content is shown for the entire animation duration.
+
+    When animating display from none to block (or another visible display value), the value will flip to block at 0% of the animation duration so it is visible throughout.
+    When animating display from block (or another visible display value) to none, the value will flip to none at 100% of the animation duration so it is visible throughout.
+
+    When transitioning these properties transition-behavior: allow-discrete needs to be set on the transitions. This effectively enables display/content-visibility transitions.
+
+    EXAMPLE
+    div.fade-in {
+      display: block;
+      animation: fade-in 0.7s ease-in forwards;
+    }
+
+    div.fade-out {
+      animation: fade-out 0.7s ease-out forwards;
+    }
+
+    @keyframes fade-in { // THIS ENSURES FADE IN 
+        0% {
+          opacity: 0;
+          display: none;
+        }
+    
+        100% {
+          opacity: 1;
+          display: block;
+        }
+    }
+    
+    @keyframes fade-out { // THIS ENSURES FADE OUT 
+        0% {
+          opacity: 1;
+          display: block;
+        }
+    
+        100% {
+          opacity: 0;
+          display: none;
+        }
+    }
+
+    TRANSITION PROVIDES CONTROL FOR THE SPEED OF ANIMATION
+    ANIMATION-DELAY SETS DELAY TIME BEFORE ANIMATION STARTS
+    The transition-timing-function CSS property sets how intermediate values are calculated for CSS properties being affected by a transition effect
+
+    Note: The auto value is often a very complex case. The specification recommends not animating from and to auto
+
+    transition: <property> <duration> <timing-function> <delay>;
+    OR EACH VALUE CAN BE SET INDIVIDUALLY BY ADDING 'TRANSITION-' IN FRONT OF EACH 
+
+    EXAMPLE
+    #delay {
+      font-size: 14px;
+      transition-property: font-size;
+      transition-duration: 4s;
+      transition-delay: 2s;
+    }
+    IF VALUES ARE OF DIFFERENT LENGTH, THE SAME RULE AS IN ANIMATION APPLIES
+
+    FOR MULTIPLE PROPERTIES 
+
+    transition:
+    width 2s,
+    height 2s,
+    background-color 2s,
+    rotate 2s;
+
+    // TRANSITION IS TYPICALLY IGNORED WHEN ANIMATION IS RUNNING
+
+    animation-fill-mode defines the final state after animation has run
+*/
+
+
+/* full button gradient animation */
+@keyframes fill-button {
+    from{
+       background-position: 0% 50%;
+    }
+    to{
+        background-position: -100% 50%; /*position gradient relative to the element and its size example if background is 200%, -100% position will position the center of gradient to the left of element */
+    }
+}
+
+@keyframes hero-anime {
+    from{
+        background-position-y: 0%;
+    }
+    to{
+        background-position-y: 10%;
+    }
+}
+
+@keyframes rotate-back-drop {
+    from{
+        transform: rotate(0deg) scale(1);
+    }
+    to{
+        transform: rotate(180deg) scale(1.2);
+    }
+}
